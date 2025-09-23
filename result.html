@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Personality Result</title>
+  <link href="./output.css" rel="stylesheet" />
+</head>
+<body class="min-h-screen bg-gradient-to-r from-red-500 via-red-600 to-red-800 text-white flex items-center justify-center px-4 py-8">
+
+  <section class="w-full max-w-xl bg-gradient-to-l to-red-200 via-red-400 from-red-500 rounded-lg shadow-lg p-6 sm:p-10 flex flex-col items-center justify-center text-center gap-6 hover:scale-[0.98] transition-transform duration-300">
+
+    <h1 class="text-2xl sm:text-4xl font-bold text-black" style="font-family:Algerian">
+      Your Personality Type Is:
+    </h1>
+
+    <p id="finalResult" class="text-lg sm:text-2xl font-semibold italic text-black" style="font-family:Bahnschrift SemiBold Condensed"></p>
+
+    <p id="description" class="text-base sm:text-xl text-black" style="font-family:Blackadder ITC"></p>
+
+    <!-- Silly mobile-only message -->
+    <p class="block sm:hidden text-sm italic text-black mt-2 animate-pulse">
+      Zoom in to reveal your destiny 🔍✨
+    </p>
+
+    <a href="./quiz1.html">
+      <button class="mt-4 px-6 py-3 italic text-black bg-gradient-to-t to-red-500 via-red-600 from-red-800 rounded-sm hover:scale-105 transition-transform duration-200">
+        Retake?
+      </button>
+    </a>
+
+  </section>
+
+  <script>
+    const rawAnswers = JSON.parse(localStorage.getItem("personalityAnswers")) || [];
+    const answers = rawAnswers.filter(ans => ans !== null && ans !== "null");
+    const counts = {};
+
+    answers.forEach(type => {
+      counts[type] = (counts[type] || 0) + 1;
+    });
+
+    let topType = null;
+    let maxCount = 0;
+
+    for (const [type, count] of Object.entries(counts)) {
+      if (count > maxCount) {
+        maxCount = count;
+        topType = type;
+      }
+    }
+
+    const descriptions = {
+      "Dreamer": "Imaginative, introspective, and emotionally attuned. You find beauty in the quiet moments.",
+      "Nurturer": "Empathetic, caring, and deeply connected to others. You thrive in meaningful relationships.",
+      "Explorer": "Adventurous, curious, and always seeking new experiences. You live for the thrill of discovery.",
+      "Planner": "Organized, goal-oriented, and dependable. You value structure and long-term success.",
+      "Indecisive": "You embrace variety and flexibility, often seeing all sides before making a choice."
+    };
+
+    document.getElementById("finalResult").textContent = topType || "No dominant type found";
+    document.getElementById("description").textContent = topType ? descriptions[topType] : "Try retaking the quiz for a clearer result.";
+  </script>
+
+</body>
+</html>

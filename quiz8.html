@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Question 8 </title>
+    <link href="./output.css" rel="stylesheet">
+
+</head>
+
+<body class="overflow-y-hidden">
+
+    <section class="bg-gradient-to-t to-red-500 via-red-600 from-red-800">
+
+        <div class="h-screen mx-2 flex items-center justify-center flex-col gap-10 hover:scale-90">
+
+            <div class="border-s-white h-[95vh] sm:h-screen my-10 w-fit px-4 sm:w-2xl bg-gradient-to-l to-red-200 via-red-400 from-red-500 flex items-center justify-center flex-col gap-4">
+
+                <h1 class="text-sm text-red-500 sm:text-4xl sm:font-bold sm:my-3" style="font-family:Algerian"> Question 8: </h1>
+
+                <h3 class="text-2xl font-semibold" style="font-family:Bahnschrift SemiBold Condensed"> What do you aspire to have in your life? </h3>
+                
+                <div class="flex flex-col gap-2 sm:gap-4 font-medium sm:my-10 sm:mr-35">
+    
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q8" value="Planner"> A Stable Future And Independence </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q8" value="Planner"> To Get Better At Managing Your Schedule </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q8" value="Nurturer"> Increase Your Mental/Physical Health </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q8" value="Explorer"> Your Own Business/Company </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q8" value="Indecisive"> None Of The Above </label>
+                </div>
+
+                <button class="px-6 py-3 italic bg-gradient-to-t to-red-500 via-red-600 from-red-800 rounded-sm hover:scale-105" onclick="saveAnswer(8)"> Next --></button>
+    
+                <p id="result" class="mt-4 font-semibold"></p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    
+    
+    <script>
+
+function saveAnswer(questionNumber) {
+  const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+  const result = document.getElementById("result");
+
+  if (!selectedOption) {
+    result.textContent = "Select an option before continuing...";
+    return;
+  }
+
+  const personalityMap = {
+    8: {
+      "A Stable Future And Independence": "Planner", 
+      "To Get Better At Managing Your Schedule": "Planner", 
+      "Increase Your Mental/Physical Health": "Nurturer", 
+      "Your Own Business/Company": "Explorer", 
+      "None Of The Above": "Indecisive"
+    }
+  };
+
+  const answerText = selectedOption.parentElement.textContent.trim();
+  const personalityType = personalityMap[questionNumber][answerText];
+
+  let answers = JSON.parse(localStorage.getItem("personalityAnswers")) || [];
+  answers.push(personalityType);
+  localStorage.setItem("personalityAnswers", JSON.stringify(answers));
+
+  const nextPage = questionNumber < 10 ? `quiz${questionNumber + 1}.html` : "result.html";
+  window.location.href = nextPage;
+}
+</script>
+
+
+</body> 
+</html>

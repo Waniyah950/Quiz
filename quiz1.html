@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Question 1 </title>
+    <link href="./output.css" rel="stylesheet">
+
+</head>
+
+<body class="overflow-y-hidden">
+
+    <section class="bg-gradient-to-t to-red-500 via-red-600 from-red-800">
+
+        <div class="h-screen mx-2 flex items-center justify-center flex-col gap-10 hover:scale-90">
+
+            <div class="border-s-white h-[95vh] sm:h-screen my-10 w-fit px-4 sm:w-2xl bg-gradient-to-l to-red-200 via-red-400 from-red-500 flex items-center justify-center flex-col gap-4">
+
+                <h1 class="text-sm text-red-500 sm:text-black sm:text-4xl sm:font-bold sm:my-3" style=font-family:Algerian> Question 1: </h1>
+
+                <h3 class="text-2xl font-semibold" style="font-family:Bahnschrift SemiBold Condensed"> What do you prefer to do after a long day? </h3>
+                
+                <div class="flex flex-col gap-4 font-medium sm:mt-10 sm:mr-35">
+    
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q1" value="Dreamer"> Listen To Music </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q1" value="Explorer"> Play Games On Your Device </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q1" value="Dreamer"> Watch Shows/Movies </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q1" value="Nurturer"> Tell Someone About Your Day/ Journal </label>
+
+                    <label class="text-[20px]"><input class="size-5 mx-2 hover:scale-90" type="radio" name="q1" value="Indecisive"> All Of The Above </label>
+
+                </div>
+
+                <p id="result"  class="font-semibold" style="color:crimson"></p>
+
+                <button class="px-6 py-3 mb-8 italic bg-gradient-to-t to-red-500 via-red-600 from-red-800 rounded-sm hover:scale-105" onclick="saveAnswer(1)"> Next --></button>
+    
+
+            </div>
+
+        </div>
+
+
+    </section>
+    
+<script>
+
+function saveAnswer(questionNumber) {
+  const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+  const result = document.getElementById("result");
+
+  if (!selectedOption) {
+    result.textContent = "Select an option before continuing...";
+    return;
+  }
+
+  const personalityMap = {
+    1: {
+      "Listen To Music": "Dreamer",
+      "Play Games On Your Device": "Explorer",
+      "Watch Shows/Movies": "Dreamer",
+      "Tell Someone About Your Day/ Journal": "Nurturer",
+      "All Of The Above": "Indecisive"
+    }
+  };
+
+  const answerText = selectedOption.parentElement.textContent.trim();
+  const personalityType = personalityMap[questionNumber][answerText];
+
+  let answers = JSON.parse(localStorage.getItem("personalityAnswers")) || [];
+  answers.push(personalityType);
+  localStorage.setItem("personalityAnswers", JSON.stringify(answers));
+
+  const nextPage = questionNumber < 10 ? `quiz${questionNumber + 1}.html` : "result.html";
+  window.location.href = nextPage;
+}
+</script>
+
+
+</body> 
+</html>

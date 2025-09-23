@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Question 4 </title>
+    <link href="./output.css" rel="stylesheet">
+
+</head>
+
+<body class="overflow-y-hidden">
+
+    <section class="bg-gradient-to-t to-red-500 via-red-600 from-red-800">
+
+        <div class="h-screen mx-2 flex items-center justify-center flex-col gap-10 hover:scale-90">
+
+            <div class="border-s-white h-[95vh] sm:h-screen my-10 w-fit px-4 sm:w-2xl bg-gradient-to-l to-red-200 via-red-400 from-red-500 flex items-center justify-center flex-col gap-4">
+
+                <h1 class="text-sm text-red-500 sm:text-4xl sm:font-bold sm:my-3" style="font-family:Algerian"> Question 4: </h1>
+
+                <h3 class="text-2xl font-semibold" style="font-family:Bahnschrift SemiBold Condensed"> A holiday is coming up after many days, You'll: </h3>
+                
+                <div class="flex flex-col gap-2 sm:gap-4 font-medium sm:my-10 sm:mr-35">
+    
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q4" value="Nurturer"> Catch Up With Friends/Socialize </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q4" value="Dreamer"> Do Self-Care And Go Shopping </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q4" value="Indecisive"> Rot In Bed And Order Takeout </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q4" value="Planner"> Get Rid Of All Your Pending Tasks </label>
+
+                    <label class="text-[20px]"><input class="size-5 m-2 hover:scale-90" type="radio" name="q4" value="Indecisive"> All Of The Above </label>
+                </div>
+
+                <button class="px-6 py-3 mt-[-10px] italic bg-gradient-to-t to-red-500 via-red-600 from-red-800 rounded-sm hover:scale-105" onclick="saveAnswer(4)"> Next --></button>
+    
+                <p id="result" class="mt-4 font-semibold"></p>
+
+            </div>
+
+        </div>
+
+
+    </section>
+    
+    
+<script>
+
+function saveAnswer(questionNumber) {
+  const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+  const result = document.getElementById("result");
+
+  if (!selectedOption) {
+    result.textContent = "Select an option before continuing...";
+    return;
+  }
+
+  const personalityMap = {
+    4: { 
+      "Catch Up With Friends/Socialize": "Nurturer", 
+      "Do Self-Care And Go Shopping": "Dreamer", 
+      "Rot In Bed And Order Takeout": "Indecisive", 
+      "Get Rid Of All Your Pending Tasks": "Planner", 
+      "All Of The Above": "Indecisive"
+    }
+  };
+
+  const answerText = selectedOption.parentElement.textContent.trim();
+  const personalityType = personalityMap[questionNumber][answerText];
+
+  let answers = JSON.parse(localStorage.getItem("personalityAnswers")) || [];
+  answers.push(personalityType);
+  localStorage.setItem("personalityAnswers", JSON.stringify(answers));
+
+  const nextPage = questionNumber < 10 ? `quiz${questionNumber + 1}.html` : "result.html";
+  window.location.href = nextPage;
+}
+</script>
+
+
+</body> 
+</html>
